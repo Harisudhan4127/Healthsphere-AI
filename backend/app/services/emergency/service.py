@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.models.models import Alert, EmergencyEvent
@@ -49,7 +50,7 @@ def create_event(db: Session, payload: dict) -> EmergencyEvent:
 def list_events(db: Session, status: str | None = None, limit: int = 50) -> list[EmergencyEvent]:
     query = db.query(EmergencyEvent)
     if status:
-        query = query.filter(EmergencyEvent.status == status.upper())
+        query = query.filter(func.upper(EmergencyEvent.status) == status.upper())
     return query.order_by(EmergencyEvent.detected_at.desc()).limit(limit).all()
 
 

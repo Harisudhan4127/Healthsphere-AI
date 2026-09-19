@@ -40,7 +40,7 @@ def list_patients(
     if search:
         query = query.filter(or_(Patient.name.ilike(f"%{search}%"), Patient.contact.ilike(f"%{search}%")))
     if status:
-        query = query.filter(Patient.status.upper() == status.upper())
+        query = query.filter(func.upper(Patient.status) == status.upper())
     if current_user.organization_id:
         query = query.filter(Patient.organization_id == current_user.organization_id)
     patients = query.order_by(Patient.created_at.desc()).limit(limit).all()

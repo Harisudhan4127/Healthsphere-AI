@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.models.models import Alert
@@ -8,9 +9,9 @@ from app.models.models import Alert
 def list_alerts(db: Session, severity: str | None = None, status: str | None = None, limit: int = 50) -> list[Alert]:
     query = db.query(Alert)
     if severity:
-        query = query.filter(Alert.severity.upper() == severity.upper())
+        query = query.filter(func.upper(Alert.severity) == severity.upper())
     if status:
-        query = query.filter(Alert.status.upper() == status.upper())
+        query = query.filter(func.upper(Alert.status) == status.upper())
     return query.order_by(Alert.created_at.desc()).limit(limit).all()
 
 
