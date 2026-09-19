@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import JSON, Boolean, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, Boolean, DateTime, Float, ForeignKey, Index, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -89,6 +89,9 @@ class Patient(Base, TimestampMixin):
 
 class HealthRecord(Base):
     __tablename__ = "health_records"
+    __table_args__ = (
+        Index("ix_health_records_patient_recorded", "patient_id", "recorded_at"),
+    )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
     patient_id: Mapped[str] = mapped_column(
