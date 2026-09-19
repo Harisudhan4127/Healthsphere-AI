@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     app_name: str = "HealthSphere AI"
     app_env: str = "development"
     api_v1_prefix: str = "/api/v1"
+    debug: bool = False
     base_url: str = "http://localhost:8000"
 
     database_url: str = "sqlite:///./healthsphere.db"
