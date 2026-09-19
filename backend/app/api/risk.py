@@ -36,6 +36,8 @@ def get_risk(
         "created_at": latest.created_at,
     }
     result["explanation"] = _explain_from_factors(result)
+    result["recommendations"] = _recommendations(patient_id, latest.level)
+    result["bars"] = impact_bars(latest.factors or [])
     return result
 
 

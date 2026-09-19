@@ -3,7 +3,8 @@ from __future__ import annotations
 from sqlalchemy.orm import Session
 
 from app.integrations.ai_provider import generate_ai_explanation
-from app.intelligence.explainability import deterministic_explanation
+from app.intelligence.explainability import deterministic_explanation, impact_bars
+from app.intelligence.recommendations import recommendations_for
 from app.intelligence.risk_engine import compute_risk, latest_risk
 
 
@@ -24,6 +25,8 @@ def calculate_risk(db: Session, patient, with_explanation: bool = True) -> dict:
         "level": result["level"],
         "factors": result["factors"],
         "explanation": explanation,
+        "recommendations": recommendations_for(result["level"]),
+        "bars": impact_bars(result["factors"]),
         "created_at": result["assessment"].created_at,
     }
 
