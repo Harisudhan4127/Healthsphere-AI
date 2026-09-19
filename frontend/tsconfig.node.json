@@ -1,0 +1,8 @@
+{
+  "recommended": {
+    "compilerOptions": {
+      "noEmit": true,
+      "jsx": "react-jsx"
+    }
+  }
+}
